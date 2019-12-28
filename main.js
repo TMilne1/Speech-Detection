@@ -12,13 +12,25 @@ var recognition = new SpeechRecognition();
 let p = document.createElement('p');
 const paragraph = document.querySelector('.words');
 paragraph.appendChild(p);
+let x;
 
 function check(e){
-    console.log(e)
+
+    const transcript = Array.from(e.results)
+        .map(result=>result[0])
+        .map(result => result.transcript).join(' ')
+
+        p.textContent = transcript;
+
+    if(e.results[0].isFinal == true){
+    p = document.createElement('p');
+    paragraph.appendChild(p)
+    }
+   
     
 }
 recognition.addEventListener('end', recognition.start)  
 recognition.addEventListener('result', check)
 
 
-recognition.start();
+recognition.start(); 
